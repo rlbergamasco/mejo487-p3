@@ -22,6 +22,17 @@
     <header></header>
     <main>
       <h1>Title</h1>
+      <div id="map" style="position: relative"></div>
+      <div class="slidecontainer">
+        <input
+          type="range"
+          min="1965"
+          max="2016"
+          value="1965"
+          class="slider"
+          id="myRange"
+        />
+      </div>
       <div class="p-4" id="table-container">
         <table id="my-table" class="display order-column stripe"></table>
       </div>
@@ -37,6 +48,9 @@
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+    <script src="js/datamaps.world.min.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>
