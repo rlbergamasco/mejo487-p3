@@ -1,36 +1,26 @@
-var year = 2002;
 var mapData = {};
-var testing = {};
+var slider = document.getElementById("myRange");
+var year = slider.value;
+var map;
+var data;
 
 $(document).ready(function () {
     console.log("ready");
-    console.log("loading")
+    console.log("loading");
     loadData();
 });
 
 function loadData() {
-    $.getJSON("data/energy.json", function (data) {
+    $.getJSON("data/energy.json", function (jsonData) {
+        data = jsonData;
+        createMapData(data);
+        buildMap();
         parseData(data);
     });
 }
 
 function parseData(data) {
     console.log(data);
-    // let newData = [];
-    // $.each(data, function (i) {
-    //     let current = newData.find(element => element.iso === data[i].iso);
-    //     if (current === undefined) {
-    //         newData.push({
-    //             "iso": data[i].iso,
-    //             "country": data[i].country,
-    //             "years": {}
-    //         })
-    //     }
-    //     current = newData.find(element => element.iso === data[i].iso);
-    //     current.years[data[i].year] = [data[i].year, data[i].population, data[i].consumption];
-    // });
-    // console.log(newData);
-
     const htmlHeader = `<thead><tr>
                         <th>Year</th>
                         <th>Country</th>
@@ -39,6 +29,33 @@ function parseData(data) {
                         <th>Consumption per Capita (MWh)</th>
                         </tr></thead>`;
     let htmlBody = `<tbody>`
+    $.each(data, function (i) {
+        $.each(data[i].years, function (j) {
+            let current = data[i].years[j];
+            htmlBody += `<tr>`;
+            htmlBody += `<td>${current[0]}</td>`;
+            htmlBody += `<td>${data[i].country}</td>`;
+            htmlBody += `<td>${current[1]}</td>`;
+            htmlBody += `<td>${current[2]}</td>`;
+            let percapita = current[2] / current[1] * 1000000;
+            percapita = percapita.toFixed(3)
+            htmlBody += `<td>${percapita}</td>`;
+            htmlBody += `</tr>`;
+        });
+    });
+    console.log(mapData)
+    htmlBody += `</tbody>`;
+    $('#my-table').append(htmlHeader);
+    $('#my-table').append(htmlBody);
+    buildTable();
+}
+
+function buildTable() {
+    $('#my-table').DataTable();
+    console.log("done");
+}
+
+function createMapData(data) {
     $.each(data, function (i) {
         if (data[i].years[year] != undefined) {
             let tempCapita = data[i].years[year][2] / data[i].years[year][1] * 1000000;
@@ -61,41 +78,12 @@ function parseData(data) {
                 fillKey: key,
                 count: tempCapita
             };
-            testing["USA"] = {
-                fillKey: "0-59",
-                count: 12
-            };
         }
-
-        $.each(data[i].years, function (j) {
-            let current = data[i].years[j];
-            htmlBody += `<tr>`;
-            htmlBody += `<td>${current[0]}</td>`;
-            htmlBody += `<td>${data[i].country}</td>`;
-            htmlBody += `<td>${current[1]}</td>`;
-            htmlBody += `<td>${current[2]}</td>`;
-            let percapita = current[2] / current[1] * 1000000;
-            percapita = percapita.toFixed(3)
-            htmlBody += `<td>${percapita}</td>`;
-            htmlBody += `</tr>`;
-        });
     });
-    console.log(mapData)
-    htmlBody += `</tbody>`;
-    $('#my-table').append(htmlHeader);
-    $('#my-table').append(htmlBody);
-    buildTable();
-    buildMap();
-}
-
-function buildTable() {
-    $('#my-table').DataTable();
-    console.log(testing)
-    console.log("done")
 }
 
 function buildMap() {
-    var map = new Datamap({
+    map = new Datamap({
         element: document.getElementById('map'),
         responsive: true,
         fills: {
@@ -108,7 +96,6 @@ function buildMap() {
             "120+": '#2b6690',
             defaultFill: '#d6d6d6'
         },
-        // data: testing,
         data: mapData,
         geographyConfig: {
             popupTemplate: function (geo, data) {
@@ -119,11 +106,37 @@ function buildMap() {
             }
         }
     });
-
     map.legend();
+    console.log(map)
 }
-
 
 window.addEventListener("resize", function () {
     map.resize();
 });
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function () {
+    year = this.value;
+    createMapData(data);
+    console.log(data)
+    console.log(mapData)
+    map.updateChoropleth(mapData);
+    console.log(year)
+}
+
+// function convertJsonData(data) {
+//     let newData = [];
+//     $.each(data, function (i) {
+//         let current = newData.find(element => element.iso === data[i].iso);
+//         if (current === undefined) {
+//             newData.push({
+//                 "iso": data[i].iso,
+//                 "country": data[i].country,
+//                 "years": {}
+//             })
+//         }
+//         current = newData.find(element => element.iso === data[i].iso);
+//         current.years[data[i].year] = [data[i].year, data[i].population, data[i].consumption];
+//     });
+//     console.log(newData);
+// }
