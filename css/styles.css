@@ -24,7 +24,7 @@ html {
 }
 
 body {
-  font-family: nyt-cheltenham, georgia, "times new roman", times, serif;
+  font-family: nyt-imperial, georgia, "times new roman", times, serif;
 }
 
 @media (max-width: 600px) {
@@ -37,13 +37,13 @@ body {
 }
 
 h1 {
+  font-family: nyt-cheltenham, georgia, "times new roman", times, serif;
   text-align: center;
   padding-top: 10px;
 }
 
 p {
   margin-bottom: 0;
-  font-family: nyt-imperial, georgia, "times new roman", times, serif;
   font-size: 1.2rem;
 }
 
@@ -129,7 +129,8 @@ button {
   border: none;
   margin: 0;
   padding: 8px;
-  font-weight: 600;
+  font-weight: 700;
+  font-family: nyt-franklin, Arial, Helvetica, sans-serif;
 }
 
 button#total {
