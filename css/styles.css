@@ -181,3 +181,43 @@ button.active {
 .fas {
   color: #3c8fc9;
 }
+
+.fa-bars {
+  color: black;
+}
+
+.bg-light {
+  background-color: white;
+}
+
+.navbar {
+  padding: 14px 10px;
+  background-color: white;
+  border-bottom: solid rgb(216, 216, 216) 0.2px;
+}
+
+.navbar-toggler {
+  border: none;
+  padding: 0;
+}
+
+.nav-text {
+  font-family: nyt-franklin-bold, Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: black;
+}
+
+.logo {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+img {
+  height: 35px;
+  width: auto;
+}
