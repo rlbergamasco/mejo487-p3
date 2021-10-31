@@ -30,6 +30,23 @@
     <header></header>
     <main>
       <h1>World Energy Consumption Over Time</h1>
+      <div class="p-3 content">
+        <p class="author">By Riley Bergamasco</p>
+        <p class="date">Published October 31, 2021</p>
+        <p>
+          Have you ever wondered how much energy you're using? How about your
+          country? As technology advances, energy use changes along with it.
+          Primary energy consumption is the measure of the total energy demand
+          of a country. This measure includes oil, coal, nuclear, wind, solar,
+          and more.
+        </p>
+        <p>
+          The map below shows the total primary energy consumption measured in
+          terawatt-hours (TWh) and the primary energy consuption per capita
+          measured in megawatt-hours (MWh) of each country from 1965 to 2016.
+          One terrawat hour is equivilent to one million megawatt hours.
+        </p>
+      </div>
       <div id="chart"></div>
       <div class="button-container pb-2">
         <button id="total" class="active">Total (TWh)</button>
@@ -75,10 +92,27 @@
           id="myRange"
         />
       </div>
+      <div class="p-3 content">
+        <p>
+          The table below shows the population, primary energy consumption, and
+          primary energy consumption per capita of each country from 1965 to
+          2016. Click on each header to sort the data, search to filter, and
+          adjust the number of entries shown using the dropdown.
+        </p>
+      </div>
       <div class="p-4" id="table-container">
         <table id="my-table" class="display order-column stripe"></table>
       </div>
+      <div class="p-3 content">
+        <p class="footer-text">
+          Data from
+          <a target="_blank" href="https://github.com/owid/energy-data"
+            >Our World in Data</a
+          >.
+        </p>
+      </div>
     </main>
+
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
