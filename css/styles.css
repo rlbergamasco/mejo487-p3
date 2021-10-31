@@ -25,15 +25,17 @@ h1 {
   bottom: 2rem;
 }
 
-.slidecontainer {
+.slide-container {
   width: 90%;
-  font-size: 0;
   margin: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
 }
 
 .slider {
   -webkit-appearance: none;
-  width: 100%;
+  flex-grow: 1;
   height: 28px;
   background: #e6e6e6;
   outline: none;
@@ -54,4 +56,8 @@ h1 {
   height: 28px;
   background: #3c8fc9;
   cursor: pointer;
+}
+
+.fas {
+  color: #3c8fc9;
 }

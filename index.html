@@ -7,6 +7,14 @@
     <meta name="author" content="Riley Bergamasco" />
     <link
       rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/4607f4eee4.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
       href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"
     />
     <link
@@ -25,7 +33,27 @@
       <div id="map" style="position: relative">
         <div class="current-year" id="current-year"></div>
       </div>
-      <div class="slidecontainer">
+      <div class="slide-container">
+        <button id="restart" class="button is-white">
+          <span class="icon is-small">
+            <i class="fas fa-undo"></i>
+          </span>
+        </button>
+        <button id="back" class="button is-white">
+          <span class="icon is-small">
+            <i class="fas fa-step-backward"></i>
+          </span>
+        </button>
+        <button id="play-pause" class="button is-white">
+          <span class="icon is-small">
+            <i id="play-pause-icon" class="fas fa-play"></i>
+          </span>
+        </button>
+        <button id="next" class="button is-white">
+          <span class="icon is-small">
+            <i class="fas fa-step-forward"></i>
+          </span>
+        </button>
         <input
           type="range"
           min="1965"

@@ -5,6 +5,7 @@ var yearContainer = document.getElementById("current-year");
 var map;
 var data;
 var isPerCapita = false;
+var isPlaying = false;
 
 yearContainer.innerHTML = year;
 
@@ -17,7 +18,7 @@ $(document).ready(function () {
 function loadData() {
     $.getJSON("data/energy.json", function (jsonData) {
         data = jsonData;
-        createMapData(data);
+        createMapData();
         buildMap();
         parseData(data);
     });
@@ -59,7 +60,7 @@ function buildTable() {
     console.log("done");
 }
 
-function createMapData(data) {
+function createMapData() {
     if (isPerCapita) {
         $.each(data, function (i) {
             if (data[i].years[year] != undefined) {
@@ -156,12 +157,47 @@ window.addEventListener("resize", function () {
     map.resize();
 });
 
-slider.oninput = function () {
-    year = this.value;
-    createMapData(data);
+function updateMap() {
+    createMapData();
     map.updateChoropleth(mapData);
     yearContainer.innerHTML = year;
 }
+
+slider.oninput = function () {
+    year = this.value;
+    updateMap();
+}
+
+$("#restart").click(function () {
+    year = 1965;
+    updateMap();
+    slider.value = year;
+});
+
+$("#back").click(function () {
+    if (year > 1965) { year--; }
+    updateMap();
+    slider.value = year;
+});
+
+$("#next").click(function () {
+    if (year < 2016) { year++; }
+    updateMap();
+    slider.value = year;
+});
+
+$("#play-pause").click(function () {
+    if (isPlaying) {
+        $("#play-pause-icon").removeClass('fa-pause');
+        $("#play-pause-icon").addClass('fa-play');
+        isPlaying = false;
+    }
+    else {
+        $("#play-pause-icon").removeClass('fa-play');
+        $("#play-pause-icon").addClass('fa-pause');
+        isPlaying = true;
+    }
+});
 
 // function convertJsonData(data) {
 //     let newData = [];
