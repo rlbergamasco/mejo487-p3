@@ -24,17 +24,18 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="css/styles.css" />
-    <title>World Energy Consumption</title>
+    <title>Project 3</title>
   </head>
   <body>
     <header></header>
     <main>
-      <h1>World Energy Consumption</h1>
+      <h1>World Energy Consumption Over Time</h1>
+      <div id="chart"></div>
+      <div class="button-container pb-2">
+        <button id="total" class="active">Total (TWh)</button>
+        <button id="percapita">Per Capita (MWh)</button>
+      </div>
       <div id="map" style="position: relative">
-        <div class="button-container">
-          <button id="total" class="active">Total Consumption (TWh)</button>
-          <button id="percapita">Consumption Per Capita (MWh)</button>
-        </div>
         <div class="current-year" id="current-year"></div>
       </div>
       <div class="slide-container">
