@@ -4,7 +4,7 @@ var year = slider.value;
 var yearContainer = document.getElementById("current-year");
 var map;
 var data;
-var isPerCapita = true;
+var isPerCapita = false;
 var isPlaying = false;
 
 yearContainer.innerHTML = year;

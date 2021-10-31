@@ -212,9 +212,11 @@ button.active {
   position: absolute;
   margin-left: auto;
   margin-right: auto;
+  top: 0.7rem;
   left: 0;
   right: 0;
   text-align: center;
+  width: fit-content;
 }
 
 img {
