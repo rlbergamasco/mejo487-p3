@@ -4,7 +4,7 @@ var year = slider.value;
 var yearContainer = document.getElementById("current-year");
 var map;
 var data;
-var isPerCapita = false;
+var isPerCapita = true;
 var isPlaying = false;
 
 yearContainer.innerHTML = year;
@@ -186,17 +186,50 @@ $("#next").click(function () {
     slider.value = year;
 });
 
-$("#play-pause").click(function () {
-    if (isPlaying) {
-        $("#play-pause-icon").removeClass('fa-pause');
-        $("#play-pause-icon").addClass('fa-play');
-        isPlaying = false;
+$("#play").click(function () {
+    isPlaying = true;
+    $("#play-pause").removeClass('play');
+    $("#play-pause").addClass('pause');
+    go();
+});
+
+$("#pause").click(function () {
+    $("#play-pause").removeClass('pause');
+    $("#play-pause").addClass('play');
+    isPlaying = false;
+});
+
+function wait() {
+    return new Promise(resolve => {
+        setTimeout(() => { resolve('') }, 200);
+    })
+}
+
+async function go() {
+    while (year < 2016 && isPlaying) {
+        year++;
+        slider.value = year;
+        updateMap();
+        await wait();
     }
-    else {
-        $("#play-pause-icon").removeClass('fa-play');
-        $("#play-pause-icon").addClass('fa-pause');
-        isPlaying = true;
-    }
+}
+
+$("#total").click(function () {
+    $("#total").addClass('active');
+    $("#percapita").removeClass('active');
+    isPerCapita = false;
+    updateMap();
+    $("svg.datamap").remove();
+    buildMap();
+});
+
+$("#percapita").click(function () {
+    $("#percapita").addClass('active');
+    $("#total").removeClass('active');
+    isPerCapita = true;
+    updateMap();
+    $("svg.datamap").remove();
+    buildMap();
 });
 
 // function convertJsonData(data) {
