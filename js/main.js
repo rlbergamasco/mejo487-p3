@@ -1,8 +1,12 @@
 var mapData = {};
 var slider = document.getElementById("myRange");
 var year = slider.value;
+var yearContainer = document.getElementById("current-year");
 var map;
 var data;
+var isPerCapita = false;
+
+yearContainer.innerHTML = year;
 
 $(document).ready(function () {
     console.log("ready");
@@ -56,37 +60,65 @@ function buildTable() {
 }
 
 function createMapData(data) {
-    $.each(data, function (i) {
-        if (data[i].years[year] != undefined) {
-            let tempCapita = data[i].years[year][2] / data[i].years[year][1] * 1000000;
-            tempCapita = tempCapita.toFixed(3)
-            let key = "Unknown";
-            if (tempCapita < 40) {
-                key = "0-39";
-            } else if (tempCapita < 60) {
-                key = "40-59";
-            } else if (tempCapita < 80) {
-                key = "60-79";
-            } else if (tempCapita < 100) {
-                key = "80-99";
-            } else if (tempCapita < 120) {
-                key = "100-119";
-            } else {
-                key = "120+";
+    if (isPerCapita) {
+        $.each(data, function (i) {
+            if (data[i].years[year] != undefined) {
+                let tempCapita = data[i].years[year][2] / data[i].years[year][1] * 1000000;
+                tempCapita = tempCapita.toFixed(3);
+                let key = "Unknown";
+                if (tempCapita < 40) {
+                    key = "0-39";
+                } else if (tempCapita < 60) {
+                    key = "40-59";
+                } else if (tempCapita < 80) {
+                    key = "60-79";
+                } else if (tempCapita < 100) {
+                    key = "80-99";
+                } else if (tempCapita < 120) {
+                    key = "100-119";
+                } else {
+                    key = "120+";
+                }
+                mapData[data[i].iso] = {
+                    fillKey: key,
+                    count: tempCapita
+                };
             }
-            mapData[data[i].iso] = {
-                fillKey: key,
-                count: tempCapita
-            };
-        }
-    });
+        });
+    } else {
+        $.each(data, function (i) {
+            if (data[i].years[year] != undefined) {
+                let total = data[i].years[year][2];
+                let key = "Unknown";
+                if (total < 400) {
+                    key = "0-499";
+                } else if (total < 800) {
+                    key = "500-999";
+                } else if (total < 1200) {
+                    key = "1000-1499";
+                } else if (total < 1600) {
+                    key = "1500-1999";
+                } else if (total < 20000) {
+                    key = "2000-19,999";
+                } else {
+                    key = "20,000+";
+                }
+                mapData[data[i].iso] = {
+                    fillKey: key,
+                    count: total
+                };
+            }
+        });
+    }
+
 }
 
 function buildMap() {
     map = new Datamap({
         element: document.getElementById('map'),
+        projection: 'mercator',
         responsive: true,
-        fills: {
+        fills: isPerCapita ? {
             Unknown: '#d6d6d6',
             "0-39": '#bfdcf1',
             "40-59": '#95CFF9',
@@ -94,6 +126,15 @@ function buildMap() {
             "80-99": '#4da4e1',
             "100-119": '#3C8FC9',
             "120+": '#2b6690',
+            defaultFill: '#d6d6d6'
+        } : {
+            Unknown: '#d6d6d6',
+            "0-499": '#bfdcf1',
+            "500-999": '#95CFF9',
+            "1000-1499": '#5fb9fa',
+            "1500-1999": '#4da4e1',
+            "2000-19,999": '#3C8FC9',
+            "20,000+": '#2b6690',
             defaultFill: '#d6d6d6'
         },
         data: mapData,
@@ -103,25 +144,23 @@ function buildMap() {
                     geo.properties.name + ": <strong>",
                     + data.count,
                     '</strong></div>'].join('');
-            }
+            },
+            highlightFillColor: '#0a4066',
+            highlightBorderColor: '#ffffff',
         }
     });
     map.legend();
-    console.log(map)
 }
 
 window.addEventListener("resize", function () {
     map.resize();
 });
 
-// Update the current slider value (each time you drag the slider handle)
 slider.oninput = function () {
     year = this.value;
     createMapData(data);
-    console.log(data)
-    console.log(mapData)
     map.updateChoropleth(mapData);
-    console.log(year)
+    yearContainer.innerHTML = year;
 }
 
 // function convertJsonData(data) {
