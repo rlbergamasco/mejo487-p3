@@ -63,6 +63,7 @@ function buildTable() {
 }
 
 function createMapData() {
+    mapData = {};
     if (isPerCapita) {
         $.each(data, function (i) {
             if (data[i].years[year] != undefined) {
