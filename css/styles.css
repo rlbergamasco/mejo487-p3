@@ -226,8 +226,9 @@ img {
   width: auto;
 }
 
-/* main.load {
-  display: none;
+main.load {
+  visibility: hidden;
+  /* display: none; */
 }
 
 #load-container {
@@ -257,4 +258,4 @@ img {
   100% {
     transform: rotate(360deg);
   }
-} */
+}

@@ -58,8 +58,8 @@ function parseData(data) {
 function buildTable() {
     $('#my-table').DataTable();
     console.log("done");
-    // $('#main').removeClass("load")
-    // $('#load-container').removeClass("load")
+    $('#main').removeClass("load")
+    $('#load-container').removeClass("load")
 }
 
 function createMapData() {
